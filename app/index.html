@@ -1204,5 +1204,37 @@ if ("serviceWorker" in navigator) {
     });
 }
 </script>
+<script>
+function iniciarVoz() {
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("O reconhecimento de voz não está disponível neste aparelho.");
+        return;
+    }
+
+    const reconhecimento = new SpeechRecognition();
+
+    reconhecimento.lang = "pt-BR";
+    reconhecimento.continuous = false;
+    reconhecimento.interimResults = false;
+
+    reconhecimento.onstart = function () {
+        alert("Microfone ativado. Pode falar.");
+    };
+
+    reconhecimento.onresult = function (event) {
+        const texto = event.results[0][0].transcript;
+        alert("Você falou: " + texto);
+    };
+
+    reconhecimento.onerror = function (event) {
+        alert("Não foi possível reconhecer a fala: " + event.error);
+    };
+
+    reconhecimento.start();
+}
+</script>
 </body>
 </html>
