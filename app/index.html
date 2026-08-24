@@ -1241,10 +1241,55 @@ function iniciarVoz() {
         alert("Microfone ativado. Pode falar.");
     };
 
-    reconhecimento.onresult = function (event) {
-        const texto = event.results[0][0].transcript;
-        alert("Você falou: " + texto);
-    };
+  reconhecimento.onresult = function (event) {
+    const textoOriginal = event.results[0][0].transcript;
+    const texto = textoOriginal.toLowerCase();
+
+    let obra = "";
+    let ambiente = "";
+
+    const matchComprimento = texto.match(/comprimento\s+([\d,.]+)/);
+    const matchLargura = texto.match(/largura\s+([\d,.]+)/);
+    const matchAltura = texto.match(/altura\s+([\d,.]+)/);
+
+    if (matchComprimento) {
+        document.getElementById("comprimento").value =
+            matchComprimento[1].replace(",", ".");
+    }
+
+    if (matchLargura) {
+        document.getElementById("largura").value =
+            matchLargura[1].replace(",", ".");
+    }
+
+    if (matchAltura) {
+        document.getElementById("altura").value =
+            matchAltura[1].replace(",", ".");
+    }
+
+    const antesComprimento = texto.split("comprimento")[0].trim();
+
+    if (antesComprimento.includes(" sala ")) {
+        const partes = antesComprimento.split(" sala ");
+
+        obra = partes[0].trim();
+        ambiente = "Sala " + partes.slice(1).join(" sala ").trim();
+    } else {
+        obra = antesComprimento;
+    }
+
+    if (obra) {
+        document.getElementById("obra").value =
+            obra.replace(/\b\w/g, letra => letra.toUpperCase());
+    }
+
+    if (ambiente) {
+        document.getElementById("ambiente").value =
+            ambiente.replace(/\b\w/g, letra => letra.toUpperCase());
+    }
+
+    alert("Medição reconhecida e preenchida.");
+};
 
     reconhecimento.onerror = function (event) {
         alert("Não foi possível reconhecer a fala: " + event.error);
