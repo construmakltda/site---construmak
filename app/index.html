@@ -73,7 +73,7 @@ button{border:none;border-radius:10px;min-height:44px;padding:11px 14px;font-siz
 </section>
 </main>
 
-<div id="modalNovo" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;padding:20px;overflow:auto">
+<div id="modalNovo" class="modal hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;padding:20px;overflow:auto">
   <div class="card" style="max-width:620px;margin:40px auto">
     <h2>Novo projeto</h2><label>Nome da obra</label><input id="nNome" placeholder="Ex.: Escola Cardoso">
     <label>Local</label><input id="nLocal"><label>Observações</label><textarea id="nObs"></textarea>
@@ -81,7 +81,7 @@ button{border:none;border-radius:10px;min-height:44px;padding:11px 14px;font-siz
   </div>
 </div>
 
-<div id="modalAmb" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;padding:20px;overflow:auto">
+<div id="modalAmb" class="modal hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;padding:20px;overflow:auto">
   <div class="card" style="max-width:760px;margin:20px auto">
     <div class="row"><h2>Ambiente / setor</h2><button class="cinza" id="fecharAmb">Fechar</button></div>
     <button class="voice" id="falar">🎤 FALAR MEDIÇÃO</button>
@@ -170,8 +170,8 @@ function renderAreas(){
 
 function novoAmb(aid){areaId=aid;ambId=null;rascunho={id:uid("amb"),nome:"",obs:"",paredes:[{id:uid("par"),comp:"",alt:""}],tComp:"",tLarg:"",servicos:[]};abrirModal()}
 function editarAmb(aid,id){areaId=aid;ambId=id;rascunho=JSON.parse(JSON.stringify(area().ambientes.find(x=>x.id===id)));abrirModal()}
-function abrirModal(){$("modalAmb").classList.remove("hidden");$("aNome").value=rascunho.nome||"";$("aObs").value=rascunho.obs||"";$("tComp").value=rascunho.tComp||"";$("tLarg").value=rascunho.tLarg||"";renderParedes();renderServicos();atTeto()}
-function fecharModal(){$("modalAmb").classList.add("hidden");rascunho=null}
+function abrirModal(){$("modalAmb").classList.remove("hidden");$("modalAmb").style.display="block";$("aNome").value=rascunho.nome||"";$("aObs").value=rascunho.obs||"";$("tComp").value=rascunho.tComp||"";$("tLarg").value=rascunho.tLarg||"";renderParedes();renderServicos();atTeto()}
+function fecharModal(){$("modalAmb").classList.add("hidden");$("modalAmb").style.display="none";rascunho=null}
 function renderParedes(){
   $("paredes").innerHTML="";rascunho.paredes.forEach((p,i)=>{
     const d=document.createElement("div");d.className="item";d.innerHTML=`<strong>Parede ${i+1}</strong><div class="grid2"><div><label>Comprimento (m)</label><input class="c" value="${esc(p.comp)}"></div><div><label>Altura (m)</label><input class="a" value="${esc(p.alt)}"></div></div><div class="muted">Área: <strong class="areaP">${fmt(areaParede(p))} m²</strong></div><button class="vermelho rem" style="margin-top:8px">Excluir parede</button>`;
@@ -240,14 +240,14 @@ function falar(){
   const r=new SR();r.lang="pt-BR";r.onstart=()=>alert("Pode falar.");r.onresult=e=>interpretar(e.results[0][0].transcript);r.start()
 }
 
-$("novoProjeto").onclick=()=>$("modalNovo").classList.remove("hidden");
-$("cancelarNovo").onclick=()=>$("modalNovo").classList.add("hidden");
-$("criarNovo").onclick=()=>{const nome=$("nNome").value.trim();if(!nome){alert("Informe o nome da obra.");return}load();const p={id:uid("proj"),nome,local:$("nLocal").value.trim(),obs:$("nObs").value.trim(),areas:[]};projetos.push(p);save();$("modalNovo").classList.add("hidden");abrirProjeto(p.id)};
+$("novoProjeto").onclick=()=>{ $("modalNovo").classList.remove("hidden"); $("modalNovo").style.display="block"; };
+$("cancelarNovo").onclick=()=>{ $("modalNovo").classList.add("hidden"); $("modalNovo").style.display="none"; };
+$("criarNovo").onclick=()=>{const nome=$("nNome").value.trim();if(!nome){alert("Informe o nome da obra.");return}load();const p={id:uid("proj"),nome,local:$("nLocal").value.trim(),obs:$("nObs").value.trim(),areas:[]};projetos.push(p);save();$("modalNovo").classList.add("hidden");$("modalNovo").style.display="none";abrirProjeto(p.id)};
 $("atualizarProjetos").onclick=renderProjetos;$("voltar").onclick=voltar;$("salvarProjeto").onclick=salvarProjeto;$("addArea").onclick=addArea;$("fecharAmb").onclick=fecharModal;$("addParede").onclick=addParede;
 $("tComp").oninput=()=>{rascunho.tComp=$("tComp").value;atTeto()};$("tLarg").oninput=()=>{rascunho.tLarg=$("tLarg").value;atTeto()};$("addSrv").onclick=addSrv;$("salvarAmb").onclick=salvarAmb;$("excluirAmb").onclick=excluirAmb;$("falar").onclick=falar;$("gerarRelatorio").onclick=gerarRelatorio;
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");const rel=b.dataset.tab==="relatorio";$("abaObra").classList.toggle("hidden",rel);$("abaRelatorio").classList.toggle("hidden",!rel);if(rel)gerarRelatorio()});
 
-load();renderProjetos();
+$("modalNovo").style.display="none"; $("modalAmb").style.display="none"; load();renderProjetos();
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}))}
 </script>
 </body>
