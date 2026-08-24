@@ -1,0 +1,12 @@
+{
+  "name": "Construmak Medições",
+  "short_name": "Construmak",
+  "description": "Medições e Relatórios de Serviços da Construmak",
+  "start_url": "/app/",
+  "scope": "/app/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#293c98",
+  "orientation": "portrait",
+  "lang": "pt-BR"
+}
