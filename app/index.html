@@ -5,12 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Construmak - Medições</title>
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#293c98">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Construmak">
+
 <style>
 *{
     box-sizing:border-box;
@@ -20,40 +18,40 @@ body{
     margin:0;
     font-family:Arial, Helvetica, sans-serif;
     background:#f4f6fb;
-    color:#1f2937;
+    color:#202938;
 }
 
 header{
     background:#293c98;
-    color:white;
+    padding:25px 15px;
     text-align:center;
-    padding:20px;
+    color:white;
 }
 
 header h1{
     margin:0;
-    font-size:28px;
+    font-size:30px;
 }
 
 header p{
-    margin:5px 0 0;
-    color:#ffc928;
+    margin:7px 0 0;
+    color:#ffc400;
+    font-size:18px;
     font-weight:bold;
 }
 
 .container{
-    width:100%;
     max-width:760px;
     margin:auto;
-    padding:15px;
+    padding:25px 16px 60px;
 }
 
 .card{
     background:white;
-    border-radius:14px;
-    padding:18px;
-    margin-bottom:15px;
-    box-shadow:0 3px 14px rgba(0,0,0,.08);
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:22px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
 h2{
@@ -64,117 +62,98 @@ h2{
 label{
     display:block;
     font-weight:bold;
-    margin-top:12px;
-    margin-bottom:5px;
+    margin:15px 0 7px;
 }
 
-input,
-select,
-textarea{
+input, select{
     width:100%;
-    padding:12px;
-    font-size:16px;
-    border:1px solid #cbd5e1;
-    border-radius:8px;
-}
-
-textarea{
-    min-height:70px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-.full{
-    grid-column:1 / -1;
+    padding:15px;
+    border:1px solid #cbd3df;
+    border-radius:12px;
+    font-size:18px;
 }
 
 button{
-    width:100%;
-    padding:14px;
-    margin-top:12px;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
+    border:0;
+    border-radius:14px;
+    padding:15px;
+    font-size:17px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.azul{
-    background:#293c98;
-    color:white;
+.voz{
+    width:100%;
+    background:#ffc000;
+    color:#202938;
+    font-size:22px;
+    margin-bottom:22px;
 }
 
-.amarelo{
-    background:#ffc928;
-    color:#111827;
+.azul{
+    width:100%;
+    background:#293c98;
+    color:white;
+    margin-top:15px;
 }
 
 .verde{
+    width:100%;
     background:#198754;
     color:white;
+    margin-top:15px;
 }
 
-.cinza{
-    background:#e5e7eb;
-    color:#111827;
+.excluir{
+    background:#dc3545;
+    color:white;
+    padding:9px 12px;
+    margin-top:12px;
 }
 
-.resultado{
-    background:#eef2ff;
-    border-left:5px solid #293c98;
-    border-radius:8px;
+.parede{
+    background:#f7f8fc;
+    border:1px solid #dde2ec;
+    border-radius:15px;
     padding:15px;
     margin-top:15px;
 }
 
-.valor{
-    font-size:25px;
-    font-weight:bold;
-    color:#293c98;
+.linha{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.item{
-    border-left:5px solid #ffc928;
-    border-top:1px solid #ddd;
-    border-right:1px solid #ddd;
-    border-bottom:1px solid #ddd;
-    border-radius:9px;
+.resultado{
+    margin-top:12px;
     padding:12px;
-    margin-bottom:10px;
+    background:#eef2ff;
+    border-radius:10px;
+    font-weight:bold;
 }
 
-.item strong{
+.total{
+    font-size:22px;
     color:#293c98;
 }
 
-.relatorio{
-    white-space:pre-wrap;
-    background:#f8fafc;
-    padding:15px;
-    border-radius:9px;
-    line-height:1.5;
-}
-
-.aviso{
-    color:#b91c1c;
-    font-weight:bold;
-    margin-top:10px;
+.resumo{
+    line-height:1.7;
 }
 
 @media(max-width:600px){
-
-    .grid{
+    .linha{
         grid-template-columns:1fr;
     }
 
-    .full{
-        grid-column:auto;
+    .container{
+        padding:20px 14px 50px;
     }
 
+    .card{
+        padding:20px;
+    }
 }
 </style>
 </head>
@@ -182,258 +161,147 @@ button{
 <body>
 
 <header>
-<h1>CONSTRUMAK</h1>
-<p>Medições e Relatórios de Serviços</p>
+    <h1>CONSTRUMAK</h1>
+    <p>Medições e Relatórios de Serviços</p>
 </header>
 
 <div class="container">
-    <button
-    type="button"
-    onclick="iniciarVoz()"
-    style="
-        width:100%;
-        background:#f2b705;
-        color:#18213a;
-        border:none;
-        border-radius:12px;
-        padding:18px;
-        margin-bottom:18px;
-        font-size:20px;
-        font-weight:bold;
-        cursor:pointer;
-    ">
-    🎤 FALAR MEDIÇÃO
+
+<button class="voz" onclick="iniciarVoz()">
+🎤 FALAR MEDIÇÃO
 </button>
 
+<div class="card">
+    <h2>1. Obra e ambiente</h2>
+
+    <label>Nome da obra</label>
+    <input id="obra" placeholder="Ex.: Posto de Saúde do Centro">
+
+    <label>Ambiente</label>
+    <input id="ambiente" placeholder="Ex.: Sala do dentista">
+</div>
 
 <div class="card">
+    <h2>2. Paredes</h2>
 
-<h2>1. Obra e ambiente</h2>
+    <p>
+        Cada parede é calculada por:
+        <strong>comprimento × altura</strong>.
+    </p>
 
-<label>Nome da obra</label>
-<input
-id="obra"
-placeholder="Ex.: Posto de Saúde do Centro">
+    <div id="listaParedes"></div>
 
-<label>Ambiente</label>
-<input
-id="ambiente"
-placeholder="Ex.: Sala do dentista">
+    <button class="azul" onclick="adicionarParede()">
+        + ADICIONAR PAREDE
+    </button>
 
+    <div class="resultado total">
+        Total das paredes:
+        <span id="totalParedes">0,00</span> m²
+    </div>
 </div>
-
 
 <div class="card">
+    <h2>3. Teto</h2>
 
-<h2>2. Medidas</h2>
+    <p>
+        O teto é calculado por:
+        <strong>comprimento × largura</strong>.
+    </p>
 
-<div class="grid">
+    <div class="linha">
+        <div>
+            <label>Comprimento (m)</label>
+            <input
+                id="tetoComprimento"
+                inputmode="decimal"
+                placeholder="Ex.: 5"
+                oninput="calcularTudo()">
+        </div>
 
-<div>
-<label>Comprimento (m)</label>
-<input
-id="comprimento"
-type="number"
-step="0.01"
-placeholder="Ex.: 5">
+        <div>
+            <label>Largura (m)</label>
+            <input
+                id="tetoLargura"
+                inputmode="decimal"
+                placeholder="Ex.: 3"
+                oninput="calcularTudo()">
+        </div>
+    </div>
+
+    <div class="resultado">
+        Área do teto:
+        <span id="totalTeto">0,00</span> m²
+    </div>
 </div>
-
-<div>
-<label>Largura (m)</label>
-<input
-id="largura"
-type="number"
-step="0.01"
-placeholder="Ex.: 4">
-</div>
-
-<div>
-<label>Altura (m)</label>
-<input
-id="altura"
-type="number"
-step="0.01"
-placeholder="Ex.: 2,80">
-</div>
-
-<div>
-<label>Paredes já medidas (m²)</label>
-<input
-id="paredeManual"
-type="number"
-step="0.01"
-placeholder="Ex.: 50">
-</div>
-
-<div>
-<label>Teto já medido (m²)</label>
-<input
-id="tetoManual"
-type="number"
-step="0.01"
-placeholder="Ex.: 20">
-</div>
-
-<div>
-<label>Portas e janelas (m²)</label>
-<input
-id="desconto"
-type="number"
-step="0.01"
-value="0">
-</div>
-
-</div>
-
-<p>
-<small>
-Se você preencher os m² diretamente, não precisa informar comprimento, largura e altura.
-</small>
-</p>
-
-</div>
-
 
 <div class="card">
+    <h2>4. Portas e janelas</h2>
 
-<h2>3. Serviço</h2>
+    <label>Área total a descontar das paredes (m²)</label>
+    <input
+        id="desconto"
+        inputmode="decimal"
+        placeholder="Ex.: 3,50"
+        oninput="calcularTudo()">
 
-<label>Tipo de serviço</label>
-
-<select id="tipoServico">
-
-<option value="pintura">
-Pintura completa
-</option>
-
-<option value="pintura_simples">
-Somente pintura
-</option>
-
-<option value="reboco">
-Reboco
-</option>
-
-<option value="alvenaria">
-Alvenaria
-</option>
-
-<option value="piso">
-Piso
-</option>
-
-<option value="forro">
-Forro
-</option>
-
-<option value="manual">
-Outro serviço
-</option>
-
-</select>
-
-<div id="outroServicoBox" style="display:none">
-
-<label>Nome do serviço</label>
-
-<input
-id="outroServico"
-placeholder="Ex.: Impermeabilização">
-
+    <div class="resultado">
+        Paredes após desconto:
+        <span id="paredesLiquidas">0,00</span> m²
+    </div>
 </div>
-
-<label>Observações</label>
-
-<textarea
-id="observacao"
-placeholder="Ex.: corrigir trincas antes da pintura">
-</textarea>
-
-<button
-class="azul"
-onclick="calcular()">
-CALCULAR
-</button>
-
-<div id="resultado"></div>
-
-<div id="erro" class="aviso"></div>
-
-<button
-class="verde"
-onclick="adicionarAmbiente()">
-ADICIONAR AO RELATÓRIO
-</button>
-
-</div>
-
 
 <div class="card">
+    <h2>5. Serviço</h2>
 
-<h2>4. Ambientes cadastrados</h2>
+    <label>Tipo de serviço</label>
 
-<div id="lista">
-Nenhum ambiente cadastrado.
+    <select id="servico">
+        <option>Pintura completa</option>
+        <option>Pintura</option>
+        <option>Raspagem</option>
+        <option>Massa corrida / acrílica</option>
+        <option>Selador / fundo preparador</option>
+        <option>Reboco</option>
+        <option>Alvenaria</option>
+        <option>Outro</option>
+    </select>
+
+    <label>Observações</label>
+    <input
+        id="observacoes"
+        placeholder="Ex.: raspar, emassar, selador e 2 demãos">
 </div>
-
-</div>
-
 
 <div class="card">
+    <h2>6. Resumo da medição</h2>
 
-<h2>5. Relatório geral</h2>
+    <div id="resumo" class="resumo">
+        Informe as medidas para gerar o resumo.
+    </div>
 
-<button
-class="amarelo"
-onclick="gerarRelatorio()">
-GERAR RELATÓRIO
-</button>
-
-<div
-id="relatorio"
-class="relatorio">
-Cadastre os ambientes e depois clique em Gerar Relatório.
+    <button class="verde" onclick="salvarMedicao()">
+        SALVAR MEDIÇÃO
+    </button>
 </div>
 
-<button
-class="cinza"
-onclick="limparTudo()">
-LIMPAR TODA A OBRA
-</button>
-
 </div>
-
-
-</div>
-
 
 <script>
 
-let ambientes = [];
+let contadorParedes = 0;
 
-let ultimaMedicao = null;
+function numero(valor){
+    if(!valor) return 0;
 
-
-function numero(id){
-
-    let campo =
-    document.getElementById(id);
-
-    let valor =
-    campo.value
-    .toString()
-    .replace(",", ".");
-
-    return Math.max(
-        0,
-        parseFloat(valor) || 0
-    );
-
+    return parseFloat(
+        String(valor)
+        .replace(/\s/g,"")
+        .replace(",",".")
+    ) || 0;
 }
 
-
-function formatar(valor){
-
+function moedaArea(valor){
     return valor.toLocaleString(
         "pt-BR",
         {
@@ -441,862 +309,411 @@ function formatar(valor){
             maximumFractionDigits:2
         }
     );
-
 }
 
-
-function calcularAreas(){
-
-    let comprimento =
-    numero("comprimento");
-
-    let largura =
-    numero("largura");
-
-    let altura =
-    numero("altura");
-
-    let paredeManual =
-    numero("paredeManual");
-
-    let tetoManual =
-    numero("tetoManual");
-
-    let desconto =
-    numero("desconto");
-
-
-    let paredes = 0;
-
-    let teto = 0;
-
-
-    if(paredeManual > 0){
-
-        paredes =
-        paredeManual;
-
-    }else if(
-        comprimento > 0 &&
-        largura > 0 &&
-        altura > 0
-    ){
-
-        paredes =
-        2 *
-        (comprimento + largura) *
-        altura;
-
-    }
-
-
-    paredes =
-    Math.max(
-        0,
-        paredes - desconto
-    );
-
-
-    if(tetoManual > 0){
-
-        teto =
-        tetoManual;
-
-    }else if(
-        comprimento > 0 &&
-        largura > 0
-    ){
-
-        teto =
-        comprimento * largura;
-
-    }
-
-
-    return {
-        paredes,
-        teto
-    };
-
-}
-
-
-function servicosAutomaticos(
-    tipo,
-    paredes,
-    teto
-){
-
-    let areaPintura =
-    paredes + teto;
-
-    let servicos = [];
-
-
-    if(tipo === "pintura"){
-
-        servicos = [
-
-            {
-                nome:"Lavagem",
-                area:areaPintura
-            },
-
-            {
-                nome:"Raspagem",
-                area:areaPintura
-            },
-
-            {
-                nome:"Massa corrida / acrílica",
-                area:areaPintura
-            },
-
-            {
-                nome:"Lixamento",
-                area:areaPintura
-            },
-
-            {
-                nome:"Selador / fundo preparador",
-                area:areaPintura
-            },
-
-            {
-                nome:"Pintura",
-                area:areaPintura
-            }
-
-        ];
-
-    }
-
-
-    if(tipo === "pintura_simples"){
-
-        servicos = [
-
-            {
-                nome:"Pintura",
-                area:areaPintura
-            }
-
-        ];
-
-    }
-
-
-    if(tipo === "reboco"){
-
-        servicos = [
-
-            {
-                nome:"Reboco",
-                area:paredes
-            }
-
-        ];
-
-    }
-
-
-    if(tipo === "alvenaria"){
-
-        servicos = [
-
-            {
-                nome:"Alvenaria",
-                area:paredes
-            }
-
-        ];
-
-    }
-
-
-    if(tipo === "piso"){
-
-        servicos = [
-
-            {
-                nome:"Piso",
-                area:teto
-            }
-
-        ];
-
-    }
-
-
-    if(tipo === "forro"){
-
-        servicos = [
-
-            {
-                nome:"Forro",
-                area:teto
-            }
-
-        ];
-
-    }
-
-
-    if(tipo === "manual"){
-
-        let nome =
-        document
-        .getElementById("outroServico")
-        .value
-        .trim();
-
-        if(!nome){
-
-            nome =
-            "Outro serviço";
-
-        }
-
-        servicos = [
-
-            {
-                nome:nome,
-                area:
-                paredes > 0
-                ? paredes
-                : teto
-            }
-
-        ];
-
-    }
-
-
-    return servicos;
-
-}
-
-
-function calcular(){
-
-    document
-    .getElementById("erro")
-    .innerHTML = "";
-
-
-    let obra =
-    document
-    .getElementById("obra")
-    .value
-    .trim();
-
-
-    let ambiente =
-    document
-    .getElementById("ambiente")
-    .value
-    .trim();
-
-
-    if(!obra){
-
-        document
-        .getElementById("erro")
-        .innerHTML =
-        "Informe o nome da obra.";
-
-        return;
-
-    }
-
-
-    if(!ambiente){
-
-        document
-        .getElementById("erro")
-        .innerHTML =
-        "Informe o ambiente.";
-
-        return;
-
-    }
-
-
-    let areas =
-    calcularAreas();
-
-
-    if(
-        areas.paredes <= 0 &&
-        areas.teto <= 0
-    ){
-
-        document
-        .getElementById("erro")
-        .innerHTML =
-        "Informe as medidas ou os m².";
-
-        return;
-
-    }
-
-
-    let tipo =
-    document
-    .getElementById("tipoServico")
-    .value;
-
-
-    let servicos =
-    servicosAutomaticos(
-        tipo,
-        areas.paredes,
-        areas.teto
-    );
-
-
-    ultimaMedicao = {
-
-        obra:
-        obra,
-
-        ambiente:
-        ambiente,
-
-        paredes:
-        areas.paredes,
-
-        teto:
-        areas.teto,
-
-        servicos:
-        servicos,
-
-        observacao:
-        document
-        .getElementById("observacao")
-        .value
-        .trim()
-
-    };
-
-
-    let html =
-    `<div class="resultado">
-
-    <strong>Resultado</strong>
-
-    <br><br>
-
-    Paredes:
-    <span class="valor">
-    ${formatar(areas.paredes)} m²
-    </span>
-
-    <br>
-
-    Teto:
-    <span class="valor">
-    ${formatar(areas.teto)} m²
-    </span>
-
-    <br><br>
-
-    <strong>
-    Serviços calculados:
-    </strong>
-
-    <br>`;
-
-
-    servicos.forEach(
-        servico => {
-
-            html +=
-            `${servico.nome}:
-            ${formatar(servico.area)} m²
-            <br>`;
-
-        }
-    );
-
-
-    html +=
-    `</div>`;
-
-
-    document
-    .getElementById("resultado")
-    .innerHTML =
-    html;
-
-}
-
-
-function adicionarAmbiente(){
-
-    if(!ultimaMedicao){
-
-        alert(
-            "Primeiro clique em CALCULAR."
-        );
-
-        return;
-
-    }
-
-
-    ambientes.push(
-        ultimaMedicao
-    );
-
-
-    ultimaMedicao = null;
-
-
-    atualizarLista();
-
-
-    document
-    .getElementById("ambiente")
-    .value =
-    "";
-
-
-    document
-    .getElementById("comprimento")
-    .value =
-    "";
-
-
-    document
-    .getElementById("largura")
-    .value =
-    "";
-
-
-    document
-    .getElementById("altura")
-    .value =
-    "";
-
-
-    document
-    .getElementById("paredeManual")
-    .value =
-    "";
-
-
-    document
-    .getElementById("tetoManual")
-    .value =
-    "";
-
-
-    document
-    .getElementById("desconto")
-    .value =
-    "0";
-
-
-    document
-    .getElementById("observacao")
-    .value =
-    "";
-
-
-    document
-    .getElementById("resultado")
-    .innerHTML =
-    "";
-
-}
-
-
-function atualizarLista(){
-
-    let lista =
-    document
-    .getElementById("lista");
-
-
-    if(
-        ambientes.length === 0
-    ){
-
-        lista.innerHTML =
-        "Nenhum ambiente cadastrado.";
-
-        return;
-
-    }
-
-
-    let html = "";
-
-
-    ambientes.forEach(
-        (item, indice) => {
-
-
-        html +=
-        `<div class="item">
-
-        <strong>
-        ${indice + 1}.
-        ${item.ambiente}
-        </strong>
-
-        <br>
-
-        Paredes:
-        ${formatar(item.paredes)} m²
-
-        <br>
-
-        Teto:
-        ${formatar(item.teto)} m²
-
-        <br><br>`;
-
-
-        item.servicos.forEach(
-            servico => {
-
-                html +=
-                `${servico.nome}:
-                ${formatar(servico.area)} m²
-                <br>`;
-
-            }
-        );
-
-
-        if(item.observacao){
-
-            html +=
-            `<br>
-            Observação:
-            ${item.observacao}`;
-
-        }
-
-
-        html +=
-        `<br>
+function adicionarParede(comprimento="", altura=""){
+
+    contadorParedes++;
+
+    const div = document.createElement("div");
+
+    div.className = "parede";
+    div.dataset.numero = contadorParedes;
+
+    div.innerHTML = `
+        <strong>Parede ${contadorParedes}</strong>
+
+        <div class="linha">
+            <div>
+                <label>Comprimento (m)</label>
+                <input
+                    class="comprimentoParede"
+                    inputmode="decimal"
+                    value="${comprimento}"
+                    placeholder="Ex.: 5"
+                    oninput="calcularTudo()">
+            </div>
+
+            <div>
+                <label>Altura (m)</label>
+                <input
+                    class="alturaParede"
+                    inputmode="decimal"
+                    value="${altura}"
+                    placeholder="Ex.: 3"
+                    oninput="calcularTudo()">
+            </div>
+        </div>
+
+        <div class="resultado">
+            Área desta parede:
+            <span class="areaParede">0,00</span> m²
+        </div>
 
         <button
-        class="cinza"
-        onclick="removerAmbiente(${indice})">
-
-        Remover ambiente
-
+            class="excluir"
+            onclick="removerParede(this)">
+            Excluir parede
         </button>
-
-        </div>`;
-
-    });
-
-
-    lista.innerHTML =
-    html;
-
-}
-
-
-function removerAmbiente(
-    indice
-){
-
-    ambientes.splice(
-        indice,
-        1
-    );
-
-
-    atualizarLista();
-
-}
-
-
-function gerarRelatorio(){
-
-    if(
-        ambientes.length === 0
-    ){
-
-        alert(
-            "Nenhum ambiente cadastrado."
-        );
-
-        return;
-
-    }
-
-
-    let totais = {};
-
-
-    let texto =
-    "RELATÓRIO DE SERVIÇOS - CONSTRUMAK\n\n";
-
-
-    texto +=
-    "OBRA: " +
-    ambientes[0].obra +
-    "\n\n";
-
-
-    ambientes.forEach(
-        (item, indice) => {
-
-
-        texto +=
-        (indice + 1) +
-        ". " +
-        item.ambiente +
-        "\n";
-
-
-        texto +=
-        "Paredes: " +
-        formatar(item.paredes) +
-        " m²\n";
-
-
-        texto +=
-        "Teto: " +
-        formatar(item.teto) +
-        " m²\n";
-
-
-        item.servicos.forEach(
-            servico => {
-
-
-            texto +=
-            servico.nome +
-            ": " +
-            formatar(servico.area) +
-            " m²\n";
-
-
-            if(
-                !totais[
-                    servico.nome
-                ]
-            ){
-
-                totais[
-                    servico.nome
-                ] = 0;
-
-            }
-
-
-            totais[
-                servico.nome
-            ] +=
-            servico.area;
-
-        });
-
-
-        if(
-            item.observacao
-        ){
-
-            texto +=
-            "Observação: " +
-            item.observacao +
-            "\n";
-
-        }
-
-
-        texto +=
-        "\n";
-
-    });
-
-
-    texto +=
-    "TOTAL GERAL POR SERVIÇO\n\n";
-
-
-    Object
-    .keys(totais)
-    .forEach(
-        nome => {
-
-
-        texto +=
-        nome +
-        ": " +
-        formatar(
-            totais[nome]
-        ) +
-        " m²\n";
-
-    });
-
+    `;
 
     document
-    .getElementById("relatorio")
-    .textContent =
-    texto;
+        .getElementById("listaParedes")
+        .appendChild(div);
 
+    calcularTudo();
 }
 
+function removerParede(botao){
 
-function limparTudo(){
+    botao.closest(".parede").remove();
 
-    if(
-        confirm(
-            "Deseja apagar todas as medições desta obra?"
-        )
-    ){
+    renumerarParedes();
 
-        ambientes = [];
-
-        ultimaMedicao =
-        null;
-
-        atualizarLista();
-
-        document
-        .getElementById("relatorio")
-        .textContent =
-        "Obra limpa.";
-
-    }
-
+    calcularTudo();
 }
 
+function renumerarParedes(){
 
-document
-.getElementById(
-    "tipoServico"
-)
-.addEventListener(
-    "change",
-    function(){
+    const paredes =
+        document.querySelectorAll(".parede");
 
-        let box =
-        document
-        .getElementById(
-            "outroServicoBox"
+    paredes.forEach((parede,indice)=>{
+
+        parede.dataset.numero = indice + 1;
+
+        parede.querySelector("strong").textContent =
+            "Parede " + (indice + 1);
+    });
+
+    contadorParedes = paredes.length;
+}
+
+function calcularTudo(){
+
+    let totalParedes = 0;
+
+    document
+        .querySelectorAll(".parede")
+        .forEach(parede=>{
+
+            const comprimento =
+                numero(
+                    parede.querySelector(
+                        ".comprimentoParede"
+                    ).value
+                );
+
+            const altura =
+                numero(
+                    parede.querySelector(
+                        ".alturaParede"
+                    ).value
+                );
+
+            const area =
+                comprimento * altura;
+
+            parede.querySelector(
+                ".areaParede"
+            ).textContent =
+                moedaArea(area);
+
+            totalParedes += area;
+        });
+
+    const tetoComprimento =
+        numero(
+            document.getElementById(
+                "tetoComprimento"
+            ).value
         );
 
+    const tetoLargura =
+        numero(
+            document.getElementById(
+                "tetoLargura"
+            ).value
+        );
 
-        if(
-            this.value ===
-            "manual"
-        ){
+    const totalTeto =
+        tetoComprimento * tetoLargura;
 
-            box.style.display =
-            "block";
+    const desconto =
+        numero(
+            document.getElementById(
+                "desconto"
+            ).value
+        );
 
-        }else{
+    const paredesLiquidas =
+        Math.max(
+            0,
+            totalParedes - desconto
+        );
 
-            box.style.display =
-            "none";
+    document.getElementById(
+        "totalParedes"
+    ).textContent =
+        moedaArea(totalParedes);
 
-        }
+    document.getElementById(
+        "totalTeto"
+    ).textContent =
+        moedaArea(totalTeto);
 
-    }
-);
+    document.getElementById(
+        "paredesLiquidas"
+    ).textContent =
+        moedaArea(paredesLiquidas);
 
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-        navigator.serviceWorker.register("./service-worker.js")
-        .then(function () {
-            console.log("Construmak instalado com sucesso.");
-        })
-        .catch(function (erro) {
-            console.log("Erro no Service Worker:", erro);
-        });
-    });
+    gerarResumo(
+        totalParedes,
+        paredesLiquidas,
+        totalTeto,
+        desconto
+    );
 }
-</script>
-<script>
-function iniciarVoz() {
-    const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    if (!SpeechRecognition) {
-        alert("O reconhecimento de voz não está disponível neste aparelho.");
+function gerarResumo(
+    totalParedes,
+    paredesLiquidas,
+    totalTeto,
+    desconto
+){
+
+    const obra =
+        document.getElementById("obra").value;
+
+    const ambiente =
+        document.getElementById("ambiente").value;
+
+    const servico =
+        document.getElementById("servico").value;
+
+    document.getElementById("resumo").innerHTML = `
+        <strong>Obra:</strong>
+        ${obra || "-"}<br>
+
+        <strong>Ambiente:</strong>
+        ${ambiente || "-"}<br><br>
+
+        <strong>Paredes brutas:</strong>
+        ${moedaArea(totalParedes)} m²<br>
+
+        <strong>Portas/janelas:</strong>
+        ${moedaArea(desconto)} m²<br>
+
+        <strong>Paredes líquidas:</strong>
+        ${moedaArea(paredesLiquidas)} m²<br>
+
+        <strong>Teto:</strong>
+        ${moedaArea(totalTeto)} m²<br><br>
+
+        <strong>Serviço:</strong>
+        ${servico}
+    `;
+}
+
+function salvarMedicao(){
+
+    calcularTudo();
+
+    const dados = {
+        obra:
+            document.getElementById("obra").value,
+
+        ambiente:
+            document.getElementById("ambiente").value,
+
+        data:
+            new Date().toLocaleString("pt-BR"),
+
+        resumo:
+            document.getElementById("resumo").innerText
+    };
+
+    let medicoes =
+        JSON.parse(
+            localStorage.getItem(
+                "construmak_medicoes"
+            ) || "[]"
+        );
+
+    medicoes.push(dados);
+
+    localStorage.setItem(
+        "construmak_medicoes",
+        JSON.stringify(medicoes)
+    );
+
+    alert("Medição salva com sucesso!");
+}
+
+function iniciarVoz(){
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+        alert(
+            "Reconhecimento de voz não disponível neste aparelho."
+        );
         return;
     }
 
-    const reconhecimento = new SpeechRecognition();
+    const reconhecimento =
+        new SpeechRecognition();
 
     reconhecimento.lang = "pt-BR";
     reconhecimento.continuous = false;
     reconhecimento.interimResults = false;
 
-    reconhecimento.onstart = function () {
+    reconhecimento.onstart = function(){
         alert("Microfone ativado. Pode falar.");
     };
 
-  reconhecimento.onresult = function (event) {
-    const textoOriginal = event.results[0][0].transcript;
-    const texto = textoOriginal.toLowerCase();
+    reconhecimento.onresult = function(event){
 
-    let obra = "";
-    let ambiente = "";
+        const texto =
+            event.results[0][0].transcript;
 
-    const matchComprimento = texto.match(/comprimento\s+([\d,.]+)/);
-    const matchLargura = texto.match(/largura\s+([\d,.]+)/);
-    const matchAltura = texto.match(/altura\s+([\d,.]+)/);
+        interpretarVoz(texto);
+    };
 
-    if (matchComprimento) {
-        document.getElementById("comprimento").value =
-            matchComprimento[1].replace(",", ".");
-    }
+    reconhecimento.onerror = function(event){
 
-    if (matchLargura) {
-        document.getElementById("largura").value =
-            matchLargura[1].replace(",", ".");
-    }
-
-    if (matchAltura) {
-        document.getElementById("altura").value =
-            matchAltura[1].replace(",", ".");
-    }
-
-    const antesComprimento = texto.split("comprimento")[0].trim();
-
-    if (antesComprimento.includes(" sala ")) {
-        const partes = antesComprimento.split(" sala ");
-
-        obra = partes[0].trim();
-        ambiente = "Sala " + partes.slice(1).join(" sala ").trim();
-    } else {
-        obra = antesComprimento;
-    }
-
-    if (obra) {
-        document.getElementById("obra").value =
-            obra.replace(/\b\w/g, letra => letra.toUpperCase());
-    }
-
-    if (ambiente) {
-        document.getElementById("ambiente").value =
-            ambiente.replace(/\b\w/g, letra => letra.toUpperCase());
-    }
-
-    alert("Medição reconhecida e preenchida.");
-};
-
-    reconhecimento.onerror = function (event) {
-        alert("Não foi possível reconhecer a fala: " + event.error);
+        alert(
+            "Não foi possível reconhecer a fala: "
+            + event.error
+        );
     };
 
     reconhecimento.start();
 }
+
+function interpretarVoz(textoOriginal){
+
+    let texto =
+        textoOriginal
+        .toLowerCase()
+        .replace(/,/g,".");
+
+    /*
+       Exemplo:
+       "parede 5 por 3"
+    */
+
+    const parede =
+        texto.match(
+            /parede(?:\s+\d+)?[^0-9]*([\d.]+)\s*(?:m|metros?)?\s*(?:por|x)\s*([\d.]+)/
+        );
+
+    if(parede){
+
+        adicionarParede(
+            parede[1],
+            parede[2]
+        );
+
+        alert(
+            "Parede adicionada: "
+            + parede[1]
+            + " x "
+            + parede[2]
+            + " m."
+        );
+
+        return;
+    }
+
+    /*
+       Exemplo:
+       "teto 5 por 3"
+    */
+
+    const teto =
+        texto.match(
+            /teto[^0-9]*([\d.]+)\s*(?:m|metros?)?\s*(?:por|x)\s*([\d.]+)/
+        );
+
+    if(teto){
+
+        document.getElementById(
+            "tetoComprimento"
+        ).value = teto[1];
+
+        document.getElementById(
+            "tetoLargura"
+        ).value = teto[2];
+
+        calcularTudo();
+
+        alert(
+            "Teto preenchido: "
+            + teto[1]
+            + " x "
+            + teto[2]
+            + " m."
+        );
+
+        return;
+    }
+
+    alert(
+        "Ouvi: " + textoOriginal +
+        "\n\nTente falar, por exemplo:" +
+        "\nParede 5 por 3" +
+        "\nou" +
+        "\nTeto 5 por 3."
+    );
+}
+
+/*
+   Começamos automaticamente
+   com uma parede.
+*/
+
+adicionarParede();
+
+document
+    .getElementById("obra")
+    .addEventListener(
+        "input",
+        calcularTudo
+    );
+
+document
+    .getElementById("ambiente")
+    .addEventListener(
+        "input",
+        calcularTudo
+    );
+
+document
+    .getElementById("servico")
+    .addEventListener(
+        "change",
+        calcularTudo
+    );
+
 </script>
+
+<script>
+if("serviceWorker" in navigator){
+
+    window.addEventListener(
+        "load",
+        function(){
+
+            navigator.serviceWorker.register(
+                "./service-worker.js"
+            );
+        }
+    );
+}
+</script>
+
 </body>
 </html>
