@@ -1,0 +1,338 @@
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Construmak Medições</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f2f5fb;
+    color:#18213a;
+}
+
+header{
+    background:#263b96;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:27px;
+}
+
+header p{
+    margin:5px 0 0;
+    color:#ffc928;
+    font-weight:bold;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:16px;
+}
+
+.card{
+    background:white;
+    padding:18px;
+    margin-bottom:16px;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+h2{
+    color:#263b96;
+    font-size:20px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:12px;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    border:1px solid #bbb;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:0;
+    border-radius:9px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.azul{
+    background:#263b96;
+    color:white;
+}
+
+.amarelo{
+    background:#ffc928;
+    color:#18213a;
+}
+
+.verde{
+    background:#18864b;
+    color:white;
+}
+
+.resultado{
+    background:#eef2ff;
+    border-left:5px solid #263b96;
+    padding:14px;
+    margin-top:15px;
+    border-radius:7px;
+}
+
+.servico{
+    padding:12px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.total{
+    font-size:22px;
+    font-weight:bold;
+    color:#263b96;
+}
+
+small{
+    color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>CONSTRUMAK</h1>
+<p>Medições de Obras</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Nova medição</h2>
+
+<label>Obra / Local</label>
+<input id="obra" placeholder="Ex.: Posto de Saúde">
+
+<label>Ambiente</label>
+<input id="ambiente" placeholder="Ex.: Consultório 1">
+
+<label>Serviço</label>
+
+<select id="servico">
+<option value="Pintura">Pintura</option>
+<option value="Selador">Selador</option>
+<option value="Massa corrida">Massa corrida</option>
+<option value="Lixamento">Lixamento</option>
+<option value="Reboco">Reboco</option>
+<option value="Alvenaria">Alvenaria</option>
+<option value="Piso">Piso</option>
+<option value="Forro">Forro</option>
+<option value="Impermeabilização">Impermeabilização</option>
+</select>
+
+<label>Comprimento (m)</label>
+<input id="comprimento" type="number" step="0.01" placeholder="Ex.: 5">
+
+<label>Altura / Largura (m)</label>
+<input id="altura" type="number" step="0.01" placeholder="Ex.: 2,80">
+
+<label>Quantidade</label>
+<input id="quantidade" type="number" value="1">
+
+<label>Descontar portas e janelas (m²)</label>
+<input id="desconto" type="number" step="0.01" value="0">
+
+<button class="azul" onclick="calcular()">CALCULAR MEDIÇÃO</button>
+
+<div id="resultado"></div>
+
+<button class="verde" onclick="adicionar()">ADICIONAR AO RELATÓRIO</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Relatório da Obra</h2>
+
+<div id="lista">
+Nenhuma medição adicionada.
+</div>
+
+<button class="amarelo" onclick="gerarRelatorio()">
+GERAR RELATÓRIO
+</button>
+
+<button onclick="limpar()">
+LIMPAR RELATÓRIO
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let medicoes=[];
+let ultimaMedicao=null;
+
+function numero(id){
+    return parseFloat(
+        document.getElementById(id).value.replace(",",".")
+    ) || 0;
+}
+
+function calcular(){
+
+    let comprimento=numero("comprimento");
+    let altura=numero("altura");
+    let quantidade=numero("quantidade");
+    let desconto=numero("desconto");
+
+    let area=(comprimento*altura*quantidade)-desconto;
+
+    if(area<0) area=0;
+
+    ultimaMedicao={
+        obra:document.getElementById("obra").value,
+        ambiente:document.getElementById("ambiente").value,
+        servico:document.getElementById("servico").value,
+        comprimento:comprimento,
+        altura:altura,
+        quantidade:quantidade,
+        desconto:desconto,
+        area:area
+    };
+
+    document.getElementById("resultado").innerHTML=
+    `<div class="resultado">
+        <strong>Área calculada</strong><br>
+        <span class="total">${area.toFixed(2)} m²</span>
+    </div>`;
+}
+
+function adicionar(){
+
+    if(!ultimaMedicao){
+        alert("Calcule a medição primeiro.");
+        return;
+    }
+
+    medicoes.push({...ultimaMedicao});
+
+    atualizarLista();
+
+    document.getElementById("comprimento").value="";
+    document.getElementById("altura").value="";
+    document.getElementById("desconto").value="0";
+
+    ultimaMedicao=null;
+
+    document.getElementById("resultado").innerHTML="";
+}
+
+function atualizarLista(){
+
+    if(medicoes.length===0){
+        document.getElementById("lista").innerHTML=
+        "Nenhuma medição adicionada.";
+        return;
+    }
+
+    let html="";
+
+    medicoes.forEach((m,i)=>{
+
+        html+=`
+        <div class="servico">
+        <strong>${i+1}. ${m.ambiente || "Ambiente"}</strong><br>
+        ${m.servico}<br>
+        ${m.comprimento} × ${m.altura} × ${m.quantidade}
+        ${m.desconto ? " - "+m.desconto+" m²" : ""}
+        <br>
+        <strong>${m.area.toFixed(2)} m²</strong>
+        </div>
+        `;
+    });
+
+    document.getElementById("lista").innerHTML=html;
+}
+
+function gerarRelatorio(){
+
+    if(medicoes.length===0){
+        alert("Adicione pelo menos uma medição.");
+        return;
+    }
+
+    let totais={};
+
+    medicoes.forEach(m=>{
+        if(!totais[m.servico]){
+            totais[m.servico]=0;
+        }
+
+        totais[m.servico]+=m.area;
+    });
+
+    let texto="RELATÓRIO DE MEDIÇÕES - CONSTRUMAK\n\n";
+
+    let obra=document.getElementById("obra").value;
+
+    if(obra){
+        texto+="OBRA: "+obra+"\n\n";
+    }
+
+    medicoes.forEach((m,i)=>{
+        texto+=
+        `${i+1}. ${m.ambiente}\n`+
+        `${m.servico}: ${m.area.toFixed(2)} m²\n\n`;
+    });
+
+    texto+="TOTAL POR SERVIÇO\n\n";
+
+    Object.keys(totais).forEach(servico=>{
+        texto+=
+        `${servico}: ${totais[servico].toFixed(2)} m²\n`;
+    });
+
+    alert(texto);
+}
+
+function limpar(){
+
+    if(confirm("Deseja apagar todas as medições?")){
+        medicoes=[];
+        ultimaMedicao=null;
+        atualizarLista();
+        document.getElementById("resultado").innerHTML="";
+    }
+}
+
+</script>
+
+</body>
+</html>
